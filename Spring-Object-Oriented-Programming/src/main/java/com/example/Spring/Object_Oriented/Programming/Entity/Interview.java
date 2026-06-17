@@ -1,6 +1,7 @@
 package com.example.Spring.Object_Oriented.Programming.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,45 +10,30 @@ import lombok.Setter;
 @Entity
 public class Interview {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        public static final @NotBlank(message = "First name is required")
+        @Size(min = 2, max = 20, message = "First name must be 2-20 characters") String SCHEDULED = "";
+        public static final Object CANCELLED = null;
+        @NotBlank(message = "First name is required")
+        @Size(min = 2, max = 20, message = "First name must be 2-20 characters")
+        private String firstName;
 
-    @ManyToOne
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+        @NotBlank(message = "Last name is required")
+        @Size(min = 2, max = 20, message = "Last name must be 2-20 characters")
+        private String lastName;
 
-    @ManyToOne
-    @JoinColumn(name = "officer_id")
-    private ImmigrationOfficer officer;
+        @NotBlank(message = "Email is required")
+        @Email(message = "Email must be valid")
+        private String email;
 
-    private String interviewDate;
+        @NotBlank(message = "Rank is required")
+        @Size(min = 1, max = 10, message = "Rank must be 1-10 characters")
+        private String rank;
 
-    private String status;
+        @Min(value = 1, message = "Clearance level must be at least 1")
+        @Max(value = 5, message = "Clearance level must not exceed 5")
+        private int clearanceLevel;
 
-    private String purpose;
 
-    public Interview(Long id, Applicant applicant,
-                     ImmigrationOfficer officer,
-                     String interviewDate,
-                     String status,
-                     String purpose) {
-        this.id = id;
-        this.applicant = applicant;
-        this.officer = officer;
-        this.interviewDate = interviewDate;
-        this.status = status;
-        this.purpose = purpose;
-    }
-
-    @Override
-    public String toString() {
-        return "Interview{" +
-                "id=" + id +
-                ", interviewDate='" + interviewDate + "..." +
-                ", status='" + status + "..." +
-                ", purpose='" + purpose + "..." +
-                '}';
-    }
-
+        public void getEmail(Object cancelled) {
+        }
 }

@@ -2,6 +2,7 @@ package com.example.Spring.Object_Oriented.Programming.Controllers;
 
 import com.example.Spring.Object_Oriented.Programming.Entity.BorderControlOfficer;
 import com.example.Spring.Object_Oriented.Programming.Entity.ImmigrationOfficer;
+import com.example.Spring.Object_Oriented.Programming.Entity.VisaApplication;
 import com.example.Spring.Object_Oriented.Programming.Repository.OfficerRepository;
 import com.example.Spring.Object_Oriented.Programming.Services.OfficerService;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,19 @@ public class OfficerController {
                                               @PathVariable Long centerId) {
 
         return officerService.transferOfficer(id, centerId);
+    }
+    @GetMapping
+    public VisaApplication assignOfficer(Long visaId, Long officerId) {
+
+        VisaApplication visa = VisaApplication.findById(visaId)
+                .orElseThrow(() -> new RuntimeException("Visa not found"));
+
+        ImmigrationOfficer officer = officerRepository.findById(officerId)
+                .orElseThrow(() -> new RuntimeException("Officer not found"));
+
+        visa.setHandlingOfficer(officer);
+
+        return VisaApplication.save(visa);
     }
 }
 

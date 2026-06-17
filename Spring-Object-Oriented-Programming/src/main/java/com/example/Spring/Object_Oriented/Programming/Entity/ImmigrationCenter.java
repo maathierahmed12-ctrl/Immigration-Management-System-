@@ -1,88 +1,61 @@
 package com.example.Spring.Object_Oriented.Programming.Entity;
-
 import jakarta.persistence.*;
-import java.util.List;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Entity
 public class ImmigrationCenter {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String name;
-    private String locationCountry;
-    private String type;
-    private int dailyCapacity;
+        @NotBlank(message = "First name is required")
+        @Size(min = 2, max = 20, message = "First name must be between 2 and 20 characters")
+        private String firstName;
 
-    @OneToMany(mappedBy = "center")
-    private List<ImmigrationOfficer> officers;
+        @NotBlank(message = "Last name is required")
+        @Size(min = 2, max = 20, message = "Last name must be between 2 and 20 characters")
+        private String lastName;
 
-    public ImmigrationCenter(Long id, String name, String locationCountry,
-                             String type, int dailyCapacity) {
-        this.id = id;
-        this.name = name;
-        this.locationCountry = locationCountry;
-        this.type = type;
-        this.dailyCapacity = dailyCapacity;
+        @NotBlank(message = "Rank is required")
+        @Size(min = 2, max = 15, message = "Rank must be between 2 and 15 characters")
+        private String rank;
+
+        @NotBlank(message = "Email is required")
+        @Email(message = "Email must be valid")
+        private String email;
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getRank() {
+            return rank;
+        }
+
+        public void setRank(String rank) {
+            this.rank = rank;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocationCountry() {
-        return locationCountry;
-    }
-
-    public void setLocationCountry(String locationCountry) {
-        this.locationCountry = locationCountry;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getDailyCapacity() {
-        return dailyCapacity;
-    }
-
-    public void setDailyCapacity(int dailyCapacity) {
-        this.dailyCapacity = dailyCapacity;
-    }
-
-    public List<ImmigrationOfficer> getOfficers() {
-        return officers;
-    }
-
-    public void setOfficers(List<ImmigrationOfficer> officers) {
-        this.officers = officers;
-    }
-
-    @Override
-    public String toString() {
-        return "ImmigrationCenter{" +
-                "id=" + id +
-                ", name='" + name + "..." +
-                ", locationCountry='" + locationCountry + "..." +
-                ", type='" + type + "...." +
-                ", dailyCapacity=" + dailyCapacity +
-                '}';
-    }
-}

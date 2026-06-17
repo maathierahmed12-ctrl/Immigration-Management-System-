@@ -1,5 +1,6 @@
 package com.example.Spring.Object_Oriented.Programming.Services;
 
+import com.example.Spring.Object_Oriented.Programming.DTO.InterviewDTO;
 import com.example.Spring.Object_Oriented.Programming.Entity.Applicant;
 import com.example.Spring.Object_Oriented.Programming.Entity.Interview;
 import com.example.Spring.Object_Oriented.Programming.Repository.InterviewRepository;
@@ -33,7 +34,7 @@ public class InterviewService {
         Applicant applicant = applicantRepository.findById(applicantId)
                 .orElseThrow(() -> new RuntimeException("Applicant not found"));
 
-        Officer officer = officerRepository.findById(officerId)
+        OfficerService officer = officerRepository.findById(officerId)
                 .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         boolean isBooked = interviewRepository
@@ -47,8 +48,8 @@ public class InterviewService {
 
         interview.setApplicant(applicant);
         interview.setOfficer(officer);
-        interview.setInterviewDateTime(dateTime);
-        interview.setStatus(Interview.SCHEDULED);
+        interview.setInterviewDate(dateTime);
+        interview.setStatus(Interview);
 
         return interviewRepository.save(interview);
     }
@@ -58,7 +59,7 @@ public class InterviewService {
         Interview interview = interviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Interview not found"));
 
-        interview.setStatus(Interview.COMPLETED);
+        interview.setStatus(Interview.CANCELLED);
 
         return interviewRepository.save(interview);
     }
@@ -79,7 +80,22 @@ public class InterviewService {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(LocalTime.MAX);
 
-        return interviewRepository
-                .findByOfficerIdAndInterviewDateTimeBetween(officerId, start, end);
+        return interviewRepository.findByOfficerIdAndInterviewDateTimeBetween(officerId, start, end);
+    }
+
+    public InterviewDTO scheduleInterview(InterviewDTO dto) {
+
+        Applicant applicant = applicantRepository.findById(dto.getApplicantId())
+                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+
+        Interview interview = interview(dto, applicant);
+
+        Interview saved = interviewRepository.save(interview);
+
+        return interview(saved);
+    }
+
+    private Interview interview(InterviewDTO dto, Applicant applicant) {
+        return null;
     }
 }

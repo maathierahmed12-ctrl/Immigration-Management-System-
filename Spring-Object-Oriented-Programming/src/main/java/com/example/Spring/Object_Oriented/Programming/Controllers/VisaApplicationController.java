@@ -1,56 +1,52 @@
 package com.example.Spring.Object_Oriented.Programming.Controllers;
 
+import com.example.Spring.Object_Oriented.Programming.Entity.Applicant;
 import com.example.Spring.Object_Oriented.Programming.Entity.VisaApplication;
-import com.example.Spring.Object_Oriented.Programming.Repository.VisaApplicationRepository;
-import org.springframework.stereotype.Service;
+import com.example.Spring.Object_Oriented.Programming.Services.VisaApplicationService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Service
-public class VisaApplicationService {
 
-    private final VisaApplicationRepository visaApplicationRepository;
+@RestController
+@RequestMapping("/api/visa")
+public class VisaApplicationController {
 
-    public VisaApplicationService(VisaApplicationRepository visaApplicationRepository) {
-        this.visaApplicationRepository = visaApplicationRepository;
+    private VisaApplicationController VisaApplicationController;
+
+    public VisaApplicationController(VisaApplication VisaApplication) {
     }
 
-    public VisaApplication submitVisa(Long applicantId, String type) {
+    @PostMapping("/submit/{applicantId}")
+    public VisaApplicationController submitVisa(@PathVariable Long applicantId,
+                                      @RequestParam String type) {
 
-        VisaApplication visa = new VisaApplication();
-        visa.setVisaType(type);
-        visa.setStatus("PENDING");
-        visa.setApplicant(applicantId);
-
-        return visaApplicationRepository.save(visa);
+        return VisaApplicationController.submitVisa(applicantId, type);
     }
 
-    public VisaApplication assignOfficer(Long visaId, Long officerId) {
+    @PutMapping("/assign/{visaId}/{officerId}")
+    public VisaApplicationController assignOfficer(@PathVariable Long visaId,
+                                         @PathVariable Long officerId) {
 
-        VisaApplication visa = visaApplicationRepository.findById(visaId)
-                .orElseThrow(() -> new RuntimeException("Visa not found"));
-
-        visa.setHandlingOfficer(officerId);
-
-        return visaApplicationRepository.save(visa);
+        return VisaApplicationController.assignOfficer(visaId, officerId);
     }
 
-    public VisaApplication processVisa(Long visaId, String status, String notes) {
+    @PutMapping("/process/{visaId}")
+    public VisaApplicationController processVisa(@PathVariable Long visaId,
+                                       @RequestParam String status,
+                                       @RequestParam String notes) {
 
-        VisaApplication visa = visaApplicationRepository.findById(visaId)
-                .orElseThrow(() -> new RuntimeException("Visa not found"));
-
-        visa.setStatus(status);
-        visa.setStatus(notes);
-
-        return visaApplicationRepository.save(visa);
+        return VisaApplicationController.processVisa(visaId, status, notes);
     }
 
-    public List<VisaApplication> findByStatus(String status) {
-        return visaApplicationRepository.findByStatus(status);
+    @GetMapping("/status/{status}")
+    public List<VisaApplication> findByStatus(@PathVariable String status) {
+
+        return VisaApplicationController.findByStatus(status);
     }
 
-    public List<VisaApplication> findByApplicantId(Long applicantId) {
-        return visaApplicationRepository.findByApplicantId(applicantId);
+    @GetMapping("/applicant/{applicantId}")
+    public List<VisaApplication> findByApplicant(@PathVariable Long applicantId) {
+
+        return VisaApplicationController.findByApplicant(applicantId);
     }
 }
-

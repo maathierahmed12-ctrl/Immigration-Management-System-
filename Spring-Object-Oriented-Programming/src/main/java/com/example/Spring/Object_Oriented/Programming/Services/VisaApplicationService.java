@@ -1,7 +1,10 @@
 package com.example.Spring.Object_Oriented.Programming.Services;
 
+import com.example.Spring.Object_Oriented.Programming.DTO.VisaApplicantDTO;
+import com.example.Spring.Object_Oriented.Programming.Entity.Applicant;
 import com.example.Spring.Object_Oriented.Programming.Entity.ImmigrationCenter;
 import com.example.Spring.Object_Oriented.Programming.Entity.ImmigrationOfficer;
+import com.example.Spring.Object_Oriented.Programming.Repository.ApplicantRepository;
 import com.example.Spring.Object_Oriented.Programming.Repository.CenterRepository;
 import com.example.Spring.Object_Oriented.Programming.Repository.OfficerRepository;
 import org.springframework.stereotype.Service;
@@ -14,11 +17,15 @@ public class VisaApplicationService {
 
     private final OfficerRepository officerRepository;
     private final CenterRepository centerRepository;
+    private final ApplicantRepository applicantRepository;
 
     public VisaApplicationService(OfficerRepository officerRepository,
-                                  CenterRepository centerRepository) {
+                                  CenterRepository centerRepository,
+                                  ApplicantRepository applicantRepository) {
+
         this.officerRepository = officerRepository;
         this.centerRepository = centerRepository;
+        this.applicantRepository = applicantRepository;
     }
 
     public ImmigrationOfficer promoteOfficer(Long officerId,
@@ -74,4 +81,29 @@ public class VisaApplicationService {
 
         return filtered;
     }
+
+    public VisaApplicantDTO saveApplicant(VisaApplicantDTO dto) {
+
+        Applicant applicant = new Applicant();
+
+        applicant.setFirstName(dto.getFirstName());
+        applicant.setLastName(dto.getLastName());
+        applicant.setPhoneNumber(dto.getPassportNumber());
+        applicant.setFirstName(dto.getNationality());
+        applicant.setPhoneNumber(dto.getPhoneNumber());
+
+        Applicant saved = applicantRepository.save(applicant);
+
+        VisaApplicantDTO response = new VisaApplicantDTO();
+
+        response.setFirstName(saved.getFirstName());
+        response.setLastName(saved.getLastName());
+        response.setPassportNumber(saved.getPhoneNumber());
+        response.setNationality(saved.getEmail());
+        response.setPhoneNumber(saved.getPhoneNumber());
+
+        return response;
+    }
+
+
 }

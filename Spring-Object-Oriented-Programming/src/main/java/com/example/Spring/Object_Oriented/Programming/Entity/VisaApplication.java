@@ -1,94 +1,37 @@
 package com.example.Spring.Object_Oriented.Programming.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class VisaApplication {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+        @NotBlank(message = "First name is required")
+        @Size(min = 2, max = 20, message = "First name must be 2-20 characters")
+        private String firstName;
 
-    @ManyToOne
-    @JoinColumn(name = "officer_id")
-    private ImmigrationOfficer handlingOfficer;
+        @NotBlank(message = "Last name is required")
+        @Size(min = 2, max = 20, message = "Last name must be 2-20 characters")
+        private String lastName;
 
-    private String visaType;
-    private String status;
+        @NotBlank(message = "Email is required")
+        @Email(message = "Email must be valid")
+        private String email;
 
-    @Column(length = 1000)
-    private String officerNotes;
+        @NotBlank(message = "Phone number is required")
+        @Size(min = 8, max = 15, message = "Phone number must be 8-15 digits")
+        private String phoneNumber;
 
-    public VisaApplication(Long id, Applicant applicant,
-                           ImmigrationOfficer handlingOfficer,
-                           String visaType, String status,
-                           String officerNotes) {
-        this.id = id;
-        this.applicant = applicant;
-        this.handlingOfficer = handlingOfficer;
-        this.visaType = visaType;
-        this.status = status;
-        this.officerNotes = officerNotes;
-    }
+        @Min(value = 18, message = "Age must be at least 18")
+        private int age;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Applicant getApplicant() {
-        return applicant;
-    }
-
-    public void setApplicant(Applicant applicant) {
-        this.applicant = applicant;
-    }
-
-    public ImmigrationOfficer getHandlingOfficer() {
-        return handlingOfficer;
-    }
-
-    public void setHandlingOfficer(ImmigrationOfficer handlingOfficer) {
-        this.handlingOfficer = handlingOfficer;
-    }
-
-    public String getVisaType() {
-        return visaType;
-    }
-
-    public void setVisaType(String visaType) {
-        this.visaType = visaType;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getOfficerNotes() {
-        return officerNotes;
-    }
-
-    public void setOfficerNotes(String officerNotes) {
-        this.officerNotes = officerNotes;
-    }
-
-    @Override
-    public String toString() {
-        return "VisaApplication{" +
-                "id=" + id +
-                ", visaType='" + visaType + "..." +
-                ", status='" + status + "..." +
-                '}';
-    }
+        public void findByApplicantId(Long applicantId) {
+        }
 }
+

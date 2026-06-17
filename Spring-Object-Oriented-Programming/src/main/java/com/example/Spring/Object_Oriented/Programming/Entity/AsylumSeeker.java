@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class AsylumSeeker extends Person{
+public class AsylumSeeker extends Person {
 
     @NotBlank(message = "First name is required")
     private String firstName;
@@ -21,35 +21,4 @@ public class AsylumSeeker extends Person{
     private String sponsorOrganization;
 
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountryOfOrigin() {
-        return countryOfOrigin;
-    }
-
-    public void setCountryOfOrigin(String countryOfOrigin) {
-        this.countryOfOrigin = countryOfOrigin;
-    }
-
-    public String getSponsorOrganization() {
-        return sponsorOrganization;
-    }
-
-    public void setSponsorOrganization(String sponsorOrganization) {
-        this.sponsorOrganization = sponsorOrganization;
-    }
 }
