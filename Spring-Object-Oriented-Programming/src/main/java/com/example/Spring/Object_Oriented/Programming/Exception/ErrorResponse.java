@@ -1,4 +1,4 @@
-package com.example.Spring.Object_Oriented.Programming.exception;
+package com.example.Spring.Object_Oriented.Programming.Exception;
 
 import lombok.Getter;
 import lombok.Setter;

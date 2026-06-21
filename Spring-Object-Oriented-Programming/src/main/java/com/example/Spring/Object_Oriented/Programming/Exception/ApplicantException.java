@@ -1,4 +1,4 @@
-package com.example.Spring.Object_Oriented.Programming.exception;
+package com.example.Spring.Object_Oriented.Programming.Exception;
 
 public class ApplicantException {
 

@@ -1,4 +1,4 @@
-package com.example.Spring.Object_Oriented.Programming.exception;
+package com.example.Spring.Object_Oriented.Programming.Exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
